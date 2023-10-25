@@ -25,7 +25,7 @@ class ProcessAudioNode(Node):
         self.declare_parameter('sample_rate', 44100)
         self._sample_rate = self.get_parameter('sample_rate').get_parameter_value().integer_value
         
-        self.publisher = self.create_publisher(AudioInput, self._topic, QoSProfile(depth=1))
+        self._publisher = self.create_publisher(AudioInput, self._topic, QoSProfile(depth=1))
 
         self.recognizer = sr.Recognizer()
         self.recognizer.pause_threshold = self._pause_threshold
@@ -51,7 +51,7 @@ class ProcessAudioNode(Node):
                 msg = AudioInput()
                 msg.audio = audio.get_wav_data().hex()
                 msg.header.stamp = self.get_clock().now().to_msg()
-                msg.header.seq = self._msg_id
+                msg.seq = self._msg_id
                 self._msg_id = self._msg_id + 1
                 self._publisher.publish(msg)
                 self.get_logger().info(f"Audio source sent {len(msg.audio)} samples")
