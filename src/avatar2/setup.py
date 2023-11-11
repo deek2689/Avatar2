@@ -21,6 +21,8 @@ setup(
         'console_scripts': [
             'sound_capture = avatar2.audio_input:main',
             'sound_dump = avatar2.audio_dump:main',
+            'avatar_camera = avatar2.opencv_camera:main',
+            'head_info = avatar2.yolo_head:main',
         ],
     },
 )
